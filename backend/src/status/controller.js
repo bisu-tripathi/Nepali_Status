@@ -30,8 +30,26 @@ const addStatus = (req, res) => {
     });
 }
 
+const deleteStatus = (req, res)=>{
+    const id = parseInt(req.params.id);
+
+    pool.query(queries.getStatusById, [id], (error, results) => {
+        const noStatusFound = !results.rows.length;
+        if(noStatusFound) {
+            res.send('This status does not exists.');
+        } 
+    });
+
+    pool.query(queries.removeStatusQuery, [id], (error, results) => {
+        if(error) throw error;
+            res.status(200).send('Deleted successfully.');
+        
+    });
+};
+
 module.exports = {
     getAllNepaliStatus,
     getNepaliStatusById,
     addStatus,
+    deleteStatus,
 };
