@@ -9,4 +9,6 @@ router.post('/', controller.addStatus);
 
 router.delete('/:id', controller.deleteStatus);
 
+router.put('/:id', controller.updateNepaliStatus);
+
 module.exports = router;

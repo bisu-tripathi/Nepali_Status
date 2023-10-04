@@ -47,9 +47,28 @@ const deleteStatus = (req, res)=>{
     });
 };
 
+/* update nepali status */
+const updateNepaliStatus = (req, res) => {
+    const id = parseInt(req.params.id);
+    const { title } = req.body;
+
+    pool.query(queries.getStatusById, [id], (error, results) => {
+        const noStatusFound = !results.rows.length;
+        if(noStatusFound) {
+            res.send(`This id: ${id} status does not exists.`);
+        } 
+
+        pool.query(queries.updateStatus, [title, id], (error, results) => {
+            if(error) throw error;
+            res.status(200).send('Status updated successfully!');
+        });
+    });
+};
+
 module.exports = {
     getAllNepaliStatus,
     getNepaliStatusById,
     addStatus,
     deleteStatus,
+    updateNepaliStatus,
 };
