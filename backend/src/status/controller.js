@@ -21,7 +21,17 @@ const getNepaliStatusById = (req, res) => {
     });
 }
 
+const addStatus = (req, res) => {
+    const { title } = req.body;
+
+    pool.query(queries.addNepaliStatus, [title], (error, results) => {
+        if (error) throw error;
+        res.status(201).send('Status inserted successfully ◙');
+    });
+}
+
 module.exports = {
     getAllNepaliStatus,
     getNepaliStatusById,
+    addStatus,
 };
